@@ -1,11 +1,12 @@
 
 services:
   app:
-    env_file: ".env"
     build:
       context: .
       args:
         - DEV=true
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
     ports:
       - "8000:8000"
     volumes:
