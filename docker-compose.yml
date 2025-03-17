@@ -1,6 +1,7 @@
 
 services:
   app:
+    env_file: ".env"
     build:
       context: .
       args:
