@@ -1,6 +1,7 @@
 
 services:
   app:
+    container_name: app
     build:
       context: .
       args:
@@ -21,8 +22,9 @@ services:
       DB_PASS: ${DB_PASS}
     depends_on:
       - db
-  
+
   db:
+    container_name: db
     image: postgres:13-alpine
     volumes:
       - dev-db-data:/var/lib/postgresql/data
