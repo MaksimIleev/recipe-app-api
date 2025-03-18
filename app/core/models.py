@@ -7,7 +7,6 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
-from pkg_resources import require
 
 
 class UserManager(BaseUserManager):
@@ -23,7 +22,6 @@ class UserManager(BaseUserManager):
 
         return user
 
-
     def create_superuser(self, email, password):
         """Create and return a new superuser."""
         user = self.create_user(email, password)
@@ -35,12 +33,13 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-   """User in the system."""
-   email = models.EmailField(max_length=2555, unique=True)
-   name = models.CharField(max_length=255)
-   is_active = models.BooleanField(default=True)
-   is_staff = models.BooleanField(default=False)
+    """User in the system."""
 
-   objects = UserManager()
+    email = models.EmailField(max_length=2555, unique=True)
+    name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
-   USERNAME_FIELD = 'email'
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
