@@ -13,3 +13,7 @@ app/*/*/*__pychache__/
 .env/
 .venv/
 venv/
+
+# IDEs
+.idea/
+.vscode/
