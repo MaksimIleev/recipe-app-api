@@ -175,3 +175,6 @@ cython_debug/
 
 # JetBrains IDE configs
 .idea
+
+# vscode
+.vscode
