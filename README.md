@@ -74,6 +74,7 @@ The Django entrypoint is `app/manage.py`. Environment variables are loaded from 
 ## Tests
 - Run unit tests: `make test`
 - Lint with Flake8: `make flake`
+- Auto-format with autopep8: `make flake-fix`
 
 ## API Overview
 All recipe endpoints require token authentication unless read-only. Typical flow:

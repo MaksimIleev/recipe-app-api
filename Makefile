@@ -30,11 +30,14 @@ migrations:
 migrate:
 	$(call indocker, python manage.py migrate)
 
-test:
+test: flake
 	$(call indocker, python manage.py test)
 
 flake:
 	$(call indocker, flake8)
+
+flake-fix:
+	$(call indocker, autopep8 --recursive --in-place app)
 
 url:
 	@ printf 'API: http://0.0.0.0:8000 \n'
