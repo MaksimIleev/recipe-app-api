@@ -12,10 +12,10 @@ from rest_framework import (
     mixins,
     status,
 )
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 
 from core.models import (
     Recipe,
@@ -66,9 +66,12 @@ class RecipeViewSet(viewsets.ModelViewSet):
             ingredient_ids = self._params_to_ints(ingredients)
             queryset = queryset.filter(ingredients__id__in=ingredient_ids)
 
-        return queryset.filter(
-            user=self.request.user
-        ).order_by('-id').distinct()
+        if self.request.user.is_authenticated:
+            return queryset.filter(
+                user=self.request.user
+            ).order_by('-id').distinct()
+
+        return queryset
 
     def get_serializer_class(self):
         """Return serializer class for request."""
@@ -125,9 +128,12 @@ class BaseRecipeAttrViewSet(
         if assigned_only:
             queryset = queryset.filter(recipe__isnull=False)
 
-        return queryset.filter(
-            user=self.request.user
-        ).order_by('-name').distinct()
+        if self.request.user.is_authenticated:
+            return queryset.filter(
+                user=self.request.user
+            ).order_by('-name').distinct()
+
+        return queryset
 
 
 class TagViewSet(BaseRecipeAttrViewSet):
