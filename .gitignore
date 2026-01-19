@@ -178,3 +178,12 @@ cython_debug/
 
 # vscode
 .vscode
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+terraform/.terraform.lock.hcl
+terraform/.terraform/
+terraform.tfvars
+*.tfvars
