@@ -17,6 +17,9 @@ locals {
   name_prefix            = "${var.project}-${var.environment}"
   docker_compose_content = file("${path.module}/../docker-compose-deploy.yml")
   user_data = templatefile("${path.module}/user_data.sh.tpl", {
+    app_repo_url      = var.app_repo_url
+    app_repo_ref      = var.app_repo_ref
+    APP_DIR           = var.app_dir
     django_secret_key = var.django_secret_key
     allowed_hosts     = var.django_allowed_hosts
     db_name           = var.db_name

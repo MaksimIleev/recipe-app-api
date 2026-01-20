@@ -60,7 +60,6 @@ variable "django_secret_key" {
 variable "django_allowed_hosts" {
   description = "Comma-separated list of hosts allowed by Django."
   type        = string
-  default     = "localhost,127.0.0.1"
 }
 
 variable "db_name" {
@@ -85,4 +84,22 @@ variable "tags" {
   description = "Additional AWS resource tags."
   type        = map(string)
   default     = {}
+}
+
+variable "app_dir" {
+  description = "Directory on the EC2 instance where the app code will be deployed."
+  type        = string
+  default     = "/opt/recipe-app"
+}
+
+variable "app_repo_url" {
+  description = "Git repository URL containing the app source to deploy onto the EC2 instance."
+  type        = string
+  default     = "https://github.com/MaksimIleev/recipe-app-api"
+}
+
+variable "app_repo_ref" {
+  description = "Optional git ref (branch, tag, or commit) to checkout after cloning."
+  type        = string
+  default     = ""
 }

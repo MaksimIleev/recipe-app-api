@@ -5,6 +5,7 @@ This configuration provisions a minimal public subnet, security group, Elastic I
 ## Prerequisites
 - Terraform >= 1.5, AWS credentials with permissions for VPC/EC2/EIP.
 - An existing EC2 key pair (`ssh_key_name` variable).
+- A Git URL the instance can clone at boot (`app_repo_url`); optionally set `app_repo_ref` to pin a branch/tag/commit. Public HTTPS is simplest; for private repos use a deploy token/credential helper.
 - Values for `django_secret_key`, `django_allowed_hosts` (include your domain/IP), and `db_pass`.
 
 ## Usage
@@ -13,6 +14,7 @@ cd terraform
 terraform init
 terraform plan \
   -var 'ssh_key_name=<your-keypair>' \
+  -var 'app_repo_url=<https-git-url>' \
   -var 'django_secret_key=<secret>' \
   -var 'django_allowed_hosts=<domain-or-ip>' \
   -var 'db_pass=<db-password>'
