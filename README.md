@@ -76,33 +76,24 @@ The Django entrypoint is `app/manage.py`. Environment variables are loaded from 
 - Lint with Flake8: `make flake`
 - Auto-format with autopep8: `make flake-fix`
 
-## API Overview
-All recipe endpoints require token authentication unless read-only. Typical flow:
-1. Create user: `POST /api/user/create/`
-2. Obtain token: `POST /api/user/token/`
-3. Authenticate requests with header `Authorization: Token <token>`
+## Key API Overview
+- **Auth model:** Token auth; include `Authorization: Token <token>` on protected endpoints.
+- Swagger UI at `/api/docs/`, OpenAPI schema at `/api/schema/`.
+- **Health:**
+   - `GET /api/health-check/` (public).
+- **Users:**
+  - `POST /api/user/create/` (register),
+  - `POST /api/user/token/` (login),
+- **Recipes:**
+   - `GET/POST /api/recipe/recipes/` (supports `tags` and `ingredients` filters),
+   - `POST /api/recipe/recipes/{id}/upload-image/` (upload images).
+- **Tags:**
+   - `GET/POST /api/recipe/tags/`,
+- **Ingredients:**
+   - `GET/POST /api/recipe/ingredients/`
 
-Key endpoint groups:
-- `/api/recipe/recipes/` – list, create, update, delete recipes; supports `tags` and `ingredients` query parameters for filtering; upload images via `POST /{id}/upload-image/`
-- `/api/recipe/tags/` – manage tags; optional `assigned_only=1` filter
-- `/api/recipe/ingredients/` – manage ingredients with the same filters as tags
-
-Swagger UI documents payloads, query parameters, and response schemas in detail.
-
-## Deployment (EC2)
-1. Provision an EC2 instance with Docker and Docker Compose installed; open ports 80/443 as needed.
-2. Clone the repository (or pull your own fork) onto the instance: `git clone <repo> && cd recipe-app-api`.
-3. Create a production `.env` with secure values (e.g., `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, `DB_*`, and `DEBUG=0`).
-4. Build and start the production stack with Nginx:
-   ```bash
-   docker compose -f docker-compose-deploy.yml build
-   docker compose -f docker-compose-deploy.yml up -d
-   ```
-5. Run database migrations inside the app container:
-   ```bash
-   docker compose -f docker-compose-deploy.yml exec app python manage.py migrate
-   ```
-6. Verify health: `curl http://<server-ip>/api/health-check/`. Configure DNS/TLS for your domain as desired.
+## Deployment (AWS)
+Terraform-based IaC that provisions the EC2 host and boots the stack automatically, see `terraform/README.md`.
 
 ## Troubleshooting
 - If the API container exits immediately, confirm Postgres credentials in `.env`.
