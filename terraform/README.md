@@ -14,6 +14,7 @@ cd terraform
 terraform init
 terraform plan \
   -var 'ssh_key_name=<your-keypair>' \
+  -var 'ami_owner_account_id=<account_id>' \
   -var 'app_repo_url=<https-git-url>' \
   -var 'django_secret_key=<secret>' \
   -var 'django_allowed_hosts=<domain-or-ip>' \
