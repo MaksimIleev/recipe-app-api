@@ -4,6 +4,17 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
+variable "ami_owner_account_id" {
+  description = "AWS account ID that owns the Ubuntu AMI to use."
+  type        = string
+  sensitive   = true
+
+  validation {
+    condition     = can(regex("^[0-9]{12}$", var.ami_owner_account_id))
+    error_message = "AMI owner account ID must be a 12-digit number."
+  }
+}
+
 variable "project" {
   description = "Project name used for tagging."
   type        = string

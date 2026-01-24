@@ -35,7 +35,7 @@ data "aws_availability_zones" "available" {
 
 data "aws_ami" "ubuntu" {
   most_recent = true
-  owners      = ["099720109477"] # Canonical
+  owners      = [var.ami_owner_account_id]
 
   filter {
     name   = "name"
